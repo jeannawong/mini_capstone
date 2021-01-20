@@ -1,6 +1,13 @@
 class Api::ProductsController < ApplicationController
   def index
     @products = Product.all
+
+    if params[:name_search_terms]
+      @products = @products.where("name ILIKE ?", "%#{params[:name_search_terms]}%")
+    end
+
+    @products = @products.order(:id => :desc)
+
     render "index.json.jb"
   end
 
@@ -13,21 +20,28 @@ class Api::ProductsController < ApplicationController
     @product = Product.new(
       name: params["name"],
       price: params["price"],
-      image_url: params["prep_time"],
+      image_url: params["image_url"],
       description: params["description"],
     )
-    @product.save
-    render "show.json.jb"
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages, status: 422 }
+    end
   end
 
   def update
     @product = Product.find_by(id: params["id"])
-    @product.title = params["name"] || @product.title
-    @product.chef = params["price"] || @product.chef
-    @product.prep_time = params["image_url"] || @product.prep_time
-    @product.ingredients = params["description"] || @product.ingredients
-    @product.save
-    render "show.json.jb"
+    @product.name = params["name"] || @product.name
+    @product.price = params["price"] || @product.price
+    @product.image_url = params["image_url"] || @product.image_url
+    @product.description = params["description"] || @product.description
+
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages, status: 422 }
+    end
   end
 
   def destroy
