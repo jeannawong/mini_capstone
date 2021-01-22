@@ -5,6 +5,6 @@
   price_discount: product.is_discounted?,
   tax: product.tax,
   price_taxed: product.total,
-  image_url: product.image_url,
   description: product.description,
+  images: product.images,
 }
