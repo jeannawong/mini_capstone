@@ -21,4 +21,15 @@ Rails.application.routes.draw do
     patch "/suppliers/:id" => "suppliers#update"
     delete "/suppliers/:id" => "suppliers#destroy"
   end
+
+  namespace :api do
+    get "/images" => "images#index"
+    post "/images" => "images#create"
+    patch "/images/:id" => "images#update"
+  end
+
+  namespace :api do
+    post "/users" => "users#create"
+    post "/sessions" => "sessions#create"
+  end
 end

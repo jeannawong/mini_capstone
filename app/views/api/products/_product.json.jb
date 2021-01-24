@@ -7,4 +7,6 @@
   price_taxed: product.total,
   description: product.description,
   images: product.images,
+  quantity: product.quantity,
+  supplier_id: product.supplier_id,
 }
