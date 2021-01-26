@@ -32,4 +32,9 @@ Rails.application.routes.draw do
     post "/users" => "users#create"
     post "/sessions" => "sessions#create"
   end
+
+  namespace :api do
+    get "/orders" => "orders#index"
+    post "/orders" => "orders#create"
+  end
 end

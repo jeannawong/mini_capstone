@@ -4,38 +4,30 @@ class Api::ProductsController < ApplicationController
     # @products = Product.all.order(:price)
     # @products = Product.all.order(:price => :desc)
 
-    if current_user
-      @products = Product.all
+    @products = Product.all
 
-      if params[:search]
-        @products = @products.where("name ILIKE ?", "%#{params[:search]}%")
-      end
-
-      if params[:discount] == "true"
-        @products = @products.where("price < ?", 10)
-      end
-
-      if params[:sort] == "price" && params[:sort_order] == "desc"
-        @products = @products.order(:price => :desc)
-      elsif params[:sort] == "price" && params[:sort_order] == "asc"
-        @products = @products.order(price: :asc)
-      else
-        @products = @products.order(:id => :asc)
-      end
-
-      render "index.json.jb"
-    else
-      render json: { message: "Unauthorized" }
+    if params[:search]
+      @products = @products.where("name ILIKE ?", "%#{params[:search]}%")
     end
+
+    if params[:discount] == "true"
+      @products = @products.where("price < ?", 10)
+    end
+
+    if params[:sort] == "price" && params[:sort_order] == "desc"
+      @products = @products.order(:price => :desc)
+    elsif params[:sort] == "price" && params[:sort_order] == "asc"
+      @products = @products.order(price: :asc)
+    else
+      @products = @products.order(:id => :asc)
+    end
+
+    render "index.json.jb"
   end
 
   def show
-    if current_user
-      @product = Product.find_by(id: params["id"])
-      render "show.json.jb"
-    else
-      render json: { message: "Unauthorized" }
-    end
+    @product = Product.find_by(id: params["id"])
+    render "show.json.jb"
   end
 
   def create
