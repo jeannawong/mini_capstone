@@ -1,4 +1,6 @@
 class Api::OrdersController < ApplicationController
+  before_action :authenticate_user
+
   def index
     @orders = current_user.orders
     #OR @orders = Order.where(user_id: current_user.id)
