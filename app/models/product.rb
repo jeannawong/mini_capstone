@@ -28,11 +28,11 @@ class Product < ApplicationRecord
   def images
     #look in images table and look for all images with a product_id that matches Image table id.
     Image.where(product_id: id)
+    #OR has_many :images
   end
 
-  #OR has_many :images
-
-  has_many :orders
   has_many :category_products
   has_many :categories, through: :category_products
+  has_many :carted_products
+  has_many :orders, through: :carted_products
 end

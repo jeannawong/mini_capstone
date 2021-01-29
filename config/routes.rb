@@ -38,4 +38,10 @@ Rails.application.routes.draw do
     post "/orders" => "orders#create"
     get "/orders/:id" => "orders#show"
   end
+
+  namespace :api do
+    get "/carted_products" => "carted_products#index"
+    post "/carted_products" => "carted_products#create"
+    get "/carted_products/:id" => "carted_products#show"
+  end
 end
