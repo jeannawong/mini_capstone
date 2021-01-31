@@ -48,4 +48,11 @@ class Api::OrdersController < ApplicationController
     @order = current_user.orders.find_by(id: params[:id])
     render "show.json.jb"
   end
+
+  def destroy
+    carted_product = CartedProduct.find_by(id: params[:id])
+    carted_product.status = "removed"
+    carted_product.save
+    render json: { status: "Carted product successfully removed!" }
+  end
 end
