@@ -31,6 +31,14 @@ class Product < ApplicationRecord
     #OR has_many :images
   end
 
+  def primary_image_url
+    if images.length > 0
+      images[0].url   # the hash "url" within the images array
+    else
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"
+    end
+  end
+
   has_many :category_products
   has_many :categories, through: :category_products
   has_many :carted_products
